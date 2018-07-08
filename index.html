@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		
+		<title>Hangman</title>
+		
+		<link href="style.css" rel="stylesheet">
+		<script src="script.js"></script>
+	</head>
+
+	<body background="images/background.png">
+	
+	<!-- Start-Bildschirm-Elemente -->
+		
+		<div style="position: absolute; top: 150px; left: 50%; transform: translate(-50%, -50%);" id="ifInGame5"><img src="images/title.png"></div>
+
+		<table align="center" id="ifInGame6" width="750px">
+			<tr>
+				<td><div align="center" class="startLetterSelection" style="top: 330px;" onclick="inGame(); threeLetterWord(); generalReset();"><p class="startLetter">3 Buchstaben</p></div></td>
+				<td><div align="center" class="startLetterSelection" style="top: 330px;" onclick="inGame(); fourLetterWord(); generalReset();"><p class="startLetter">4 Buchstaben</p></div></td>
+				<td><div align="center" class="startLetterSelection" style="top: 330px;" onclick="inGame(); fiveLetterWord(); generalReset();"><p class="startLetter">5 Buchstaben</p></div></td>
+			</tr>
+			<tr>
+				<td><div align="center" class="startLetterSelection" style="top: 430px;" onclick="inGame(); sixLetterWord(); generalReset();"><p class="startLetter">6 Buchstaben</p></div></td>
+				<td><div align="center" class="startLetterSelection" style="top: 430px;" onclick="inGame(); sevenLetterWord(); generalReset();"><p class="startLetter">7 Buchstaben</p></div></td>
+				<td><div align="center" class="startLetterSelection" style="top: 430px;" onclick="inGame(); eightLetterWord(); generalReset();"><p class="startLetter">8 Buchstaben</p></div></td>
+			</tr>
+			<tr>
+				<td width="245px"></td>
+				<td><div align="center" class="startLetterSelection" style="top: 530px; height: 115px;" onclick="inGame(); randomLetterWord(); generalReset();"><p class="startLetter">Zufällige Buchstabenanzahl</p></div></td>
+				<td width="245px"></td>
+			</tr>
+		
+	<!-- InGame-Elemente -->
+
+		<div class="nInGame" id="ifInGame4" style="top: 20px; position: absolute; right: 20px; height: 50px; width: 170px;" onclick="menuButton()"><p style="background-color: #FFFFFF; font-size: 17pt; font-family: Arial; border-radius: 15px; text-align: center; vertical-align: middle; line-height: 50px;"><b>Menü</b></p></div>
+		
+		<div align="center" class="nInGame" id="ifInGame1"><img id="hangmanDiv" src="images/hangman/h0.png"></div>
+		
+		<table align="center" class="nInGame" id="ifInGame2">
+			<tr id="guessedKeysTable" height="196px">
+				<td class="guessedLetter" id="letter1"><p>_</p></td>
+				<td class="guessedLetter" id="letter2"><p>_</p></td>
+				<td class="guessedLetter" id="letter3"><p>_</p></td>
+				<td class="guessedLetter" id="letter4"><p>_</p></td>
+				<td class="guessedLetter" id="letter5"><p>_</p></td>
+				<td class="guessedLetter" id="letter6"><p>_</p></td>
+				<td class="guessedLetter" id="letter7"><p>_</p></td>
+				<td class="guessedLetter" id="letter8"><p>_</p></td>
+			</tr>
+		</table>
+
+		<table align="center" class="nInGame" id="ifInGame3">
+			<tr>
+				<td><div align="center" class="keyboard" id="A" onclick="letterClick(A)"><p class="keyboardLetter">A</p></div></td>
+				<td><div align="center" class="keyboard" id="B" onclick="letterClick(B)"><p class="keyboardLetter">B</p></div></td>
+				<td><div align="center" class="keyboard" id="C" onclick="letterClick(C)"><p class="keyboardLetter">C</p></div></td>
+				<td><div align="center" class="keyboard" id="D" onclick="letterClick(D)"><p class="keyboardLetter">D</p></div></td>
+				<td><div align="center" class="keyboard" id="E" onclick="letterClick(E)"><p class="keyboardLetter">E</p></div></td>
+				<td><div align="center" class="keyboard" id="F" onclick="letterClick(F)"><p class="keyboardLetter">F</p></div></td>
+				<td><div align="center" class="keyboard" id="G" onclick="letterClick(G)"><p class="keyboardLetter">G</p></div></td>
+				<td><div align="center" class="keyboard" id="H" onclick="letterClick(H)"><p class="keyboardLetter">H</p></div></td>
+				<td><div align="center" class="keyboard" id="I" onclick="letterClick(I)"><p class="keyboardLetter">I</p></div></td>
+				<td><div align="center" class="keyboard" id="J" onclick="letterClick(J)"><p class="keyboardLetter">J</p></div></td>
+			</tr>
+			<tr>
+				<td><div align="center" class="keyboard" id="K" onclick="letterClick(K)"><p class="keyboardLetter">K</p></div></td>
+				<td><div align="center" class="keyboard" id="L" onclick="letterClick(L)"><p class="keyboardLetter">L</p></div></td>
+				<td><div align="center" class="keyboard" id="M" onclick="letterClick(M)"><p class="keyboardLetter">M</p></div></td>
+				<td><div align="center" class="keyboard" id="N" onclick="letterClick(N)"><p class="keyboardLetter">N</p></div></td>
+				<td><div align="center" class="keyboard" id="O" onclick="letterClick(O)"><p class="keyboardLetter">O</p></div></td>
+				<td><div align="center" class="keyboard" id="P" onclick="letterClick(P)"><p class="keyboardLetter">P</p></div></td>
+				<td><div align="center" class="keyboard" id="Q" onclick="letterClick(Q)"><p class="keyboardLetter">Q</p></div></td>
+				<td><div align="center" class="keyboard" id="R" onclick="letterClick(R)"><p class="keyboardLetter">R</p></div></td>
+				<td><div align="center" class="keyboard" id="S" onclick="letterClick(S)"><p class="keyboardLetter">S</p></div></td>
+				<td><div align="center" class="keyboard" id="T" onclick="letterClick(T)"><p class="keyboardLetter">T</p></div></td>
+			</tr>
+			<tr>
+				<td><div align="center" class="keyboard" id="U" onclick="letterClick(U)"><p class="keyboardLetter">U</p></div></td>
+				<td><div align="center" class="keyboard" id="V" onclick="letterClick(V)"><p class="keyboardLetter">V</p></div></td>
+				<td><div align="center" class="keyboard" id="W" onclick="letterClick(W)"><p class="keyboardLetter">W</p></div></td>
+				<td><div align="center" class="keyboard" id="X" onclick="letterClick(X)"><p class="keyboardLetter">X</p></div></td>
+				<td><div align="center" class="keyboard" id="Y" onclick="letterClick(Y)"><p class="keyboardLetter">Y</p></div></td>
+				<td><div align="center" class="keyboard" id="Z" onclick="letterClick(Z)"><p class="keyboardLetter">Z</p></div></td>
+				<td><div align="center" class="keyboard" id="Ä" onclick="letterClick(Ä)"><p class="keyboardLetter">Ä</p></div></td>
+				<td><div align="center" class="keyboard" id="Ö" onclick="letterClick(Ö)"><p class="keyboardLetter">Ö</p></div></td>
+				<td><div align="center" class="keyboard" id="Ü" onclick="letterClick(Ü)"><p class="keyboardLetter">Ü</p></div></td>
+				<td><div align="center" class="keyboard" id="ß" onclick="letterClick(ß)"><p class="keyboardLetter">ß</p></div></td>
+			</tr>
+		</table>
+		
+		<table align="center" id="ifInGame7" width="620px">
+			<tr>
+				<td><div align="center" style="top: 720px; width: 250px; height: 150px; position: absolute; margin: 30px 30px 30px 30px;" onclick="langChange(1)"><img id="GERflag" src="images/flags/GER.png"></div></td>
+				<td><div align="center" style="top: 720px; width: 250px; height: 150px; position: absolute; margin: 30px 30px 30px 30px;" onclick="langChange(2)"><img id="ENGflag" src="images/flags/ENGbw.png"></div></td>
+			</tr>
+		</table>
+		
+		<div style="position: absolute; bottom: 10px; right: 10px; font-family: Arial; font-size: 10pt;">Jan Leber, Kevin Kleiber 2018</div>
+	</body>
+</html>

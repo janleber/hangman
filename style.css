@@ -1,0 +1,46 @@
+.nInGame 	{
+			visibility: hidden;
+			}
+
+.yInGame 	{
+			visibility: visible;
+			}
+
+.keyboard 	{
+			height: 75px;
+			width: 75px;
+			border-radius: 15px;
+			background-color: #FFFFFF;
+			}
+
+.keyboardLetter {
+				font-size: 30pt;
+				font-family: Arial;
+				
+				text-align: center;
+				vertical-align: middle;
+				line-height: 75px;
+				}
+
+.startLetter {
+				font-size: 20pt;
+				font-family: Arial;
+				
+				text-align: center;
+				vertical-align: middle;
+				}
+				
+.guessedLetter 	{
+				font-size: 45pt;
+				font-family: Arial;
+				}
+
+.startLetterSelection 	{
+						position: absolute;
+						
+						background-color: #FFFFFF;
+						height: 85px;
+						width: 225px;
+						border-radius: 15px;
+						margin: 10px 10px 10px 10px;
+						}
