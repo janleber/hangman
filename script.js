@@ -293,7 +293,7 @@ function letterClick(letter) //Funktion für die einzelnen Tasten
 	{
 	if (keysPressable == true) //letterClick() ist nur ausführbar, wenn die Tasten auch drückbar sind
 		{
-		if (letter.style.background != "rgb(132, 132, 132) none repeat scroll 0% 0%") //Nur ausgeführt, wenn die Farbe der Taste nicht grau ist ("rgb(132, 132, 132) ..." ist der innerHTML-Wert eines grauen Buchstaben)
+		if (letter.style.background.indexOf("rgb(132, 132, 132)") == -1) //Nur ausgeführt, wenn die Farbe der Taste nicht grau ist ("rgb(132, 132, 132) ..." ist der innerHTML-Wert eines grauen Buchstaben)
 			{
 			var pressedKey = letter.id; //Der gedrückte Buchstabe entpricht der id der taste
 			var rightLetter = false; //rightLetter gibt an, ob ein richtiger Buchstabe gefunden wurde
