@@ -1,7 +1,6 @@
 var word = "ABC"; //Das richtige Wort wird in dieser Variable gespeichert; am Anfang befindet sich hier ein Platzhalter mit 3 Buchstaben
 var rightLetters = 0; //Die richtig erratenen Buchstaben
 var wordLetters = 3; //Eine Variable für die Buchstabenanzahl
-var letters = word.length; //Die Anzahl der Buchstaben des Wortes entspricht seiner Länge
 var mistakes = 0; //Die Anzahl der gemachten Fehler
 var keysPressable = true; //Diese Variable gibt an, ob man die Buchstaben aktuell drücken kann (siehe letterClick())
 var randomLetters = false; //Ist diese Variable wahr, werden Wörter mit zufälliger Buchstabenlänge angegeben (siehe randomLetterWord(); letterClick())
@@ -154,7 +153,7 @@ function threeLetterWord() //Wort mit 3 Buchstaben
 	{
 	wordLetters = 3; //Die Buchstabenanzahl des neuen Wortes ist 3
 	
-	getWordFromTxt(3); //Ein neues Wort wird herausgesucht
+	word = getWordFromTxt(3, word); //Ein neues Wort wird herausgesucht
 	
 	displayReset();
 	}
@@ -163,7 +162,7 @@ function fourLetterWord() //siehe threeLetterWord()
 	{
 	wordLetters = 4;
 	
-	getWordFromTxt(4);
+	word = getWordFromTxt(4, word);
 	
 	displayReset();
 	}
@@ -172,7 +171,7 @@ function fiveLetterWord() //siehe threeLetterWord()
 	{
 	wordLetters = 5;
 	
-	getWordFromTxt(5);
+	word = getWordFromTxt(5, word);
 	
 	displayReset();
 	}
@@ -181,7 +180,7 @@ function sixLetterWord() //siehe threeLetterWord()
 	{
 	wordLetters = 6;
 	
-	getWordFromTxt(6);
+	word = getWordFromTxt(6, word);
 	
 	displayReset();
 	}
@@ -190,7 +189,7 @@ function sevenLetterWord() //siehe threeLetterWord()
 	{
 	wordLetters = 7;
 	
-	getWordFromTxt(7);
+	word = getWordFromTxt(7, word);
 	
 	displayReset();
 	}
@@ -199,7 +198,7 @@ function eightLetterWord() //siehe threeLetterWord()
 	{
 	wordLetters = 8;
 	
-	getWordFromTxt(8);
+	word = getWordFromTxt(8, word);
 	
 	displayReset();
 	}
@@ -247,10 +246,15 @@ function randomLetterWord() //Gibt ein Wort mit zufälliger Buchstabenlänge aus
 	
 	}
 
-function getWordFromTxt(number) //Benutzt XMLHttpRequest, um ein zufälliges Wort aus einer Textdatei auszulesen
+function cheat() 
 	{
+		alert(word);
+	}
+	
+function getWordFromTxt(number, currentWord) //Benutzt XMLHttpRequest, um ein zufälliges Wort aus einer Textdatei auszulesen
+	{
+	var returnWord = "ABC";
 	var wordRequest = new XMLHttpRequest(); //Neues XMLHttpRequest
-	var wordUsedBefore = word; //Das vorher abgefragte Wort entspricht noch dem aktuellen Wort
 	
 	if (lang == "GER")
 		wordRequest.open("GET", "words/GER" + number + ".txt", false); //Öffnet entsprechende Datei (Deutsch)
@@ -261,34 +265,20 @@ function getWordFromTxt(number) //Benutzt XMLHttpRequest, um ein zufälliges Wor
 	wordRequest.overrideMimeType("text/plain; charset=iso-8859-1;");
 	wordRequest.send(null); //Sendet die Anfrage
 	
-	//wordRequest.onreadystatechange = function()
-		//{
-		if (wordRequest.readyState === 4 && wordRequest.status === 200) //Wird ausgeführt, wenn die Antwort erhalten ist
+	if (wordRequest.readyState === 4 && wordRequest.status === 200) //Wird ausgeführt, wenn die Antwort erhalten ist
+		{
+		var allWords = wordRequest.responseText.split("\n");
+		if (allWords.length > 0) 
 			{
-			txtLength = wordRequest.responseText.length; //Gesamtlänge des Dokuments (Absatz = 2 Leerzeichen)
-			numb = number+2;
-			
-			wordFromTxtLength = (txtLength+2)/(number+2);
-			randomWordNumber = Math.floor(wordFromTxtLength*Math.random());
-			
-			finishedWord = ""; //finishedWord wird als String festgelegt
-			
-			for (i=(randomWordNumber*numb); i<(randomWordNumber*numb)+number; i++)
-				{
-				receivedLetter = wordRequest.responseText.charAt(i);
-				
-				finishedWord = finishedWord.concat(receivedLetter); //receivedLetter wird an finishedWord angefügt
-				}
-			
-			word = finishedWord; //Endvariable ist word
-			letters = word.length; //Die Buchstaben eines Wortes entsprechen seiner Länge
-			
-			if (wordUsedBefore == word) //Verhindert, dass dasselbe Wort direkt hintereinander abgefragt wird
-				getWordFromTxt(number);
+			randomWordNumber =  Math.ceil(Math.random() * allWords.length);
+			returnWord = allWords[randomWordNumber].replace(/\r?\n?/g, '').trim();
+			if (currentWord == returnWord) //Verhindert, dass dasselbe Wort direkt hintereinander abgefragt wird
+				returnWord = getWordFromTxt(number, returnWord);
 			}
-		//};
+		}
+	return returnWord;
 	}
-
+	
 function letterClick(letter) //Funktion für die einzelnen Tasten
 	{
 	if (keysPressable == true) //letterClick() ist nur ausführbar, wenn die Tasten auch drückbar sind
@@ -298,7 +288,7 @@ function letterClick(letter) //Funktion für die einzelnen Tasten
 			var pressedKey = letter.id; //Der gedrückte Buchstabe entpricht der id der taste
 			var rightLetter = false; //rightLetter gibt an, ob ein richtiger Buchstabe gefunden wurde
 			
-			for (i=0; i<letters; i++) //Die Länge des Wortes mal wird geschaut, ob die gedrückte Taste einem oder mehreren Buchstaben des Wortes entspricht
+			for (i=0; i<word.length; i++) //Die Länge des Wortes mal wird geschaut, ob die gedrückte Taste einem oder mehreren Buchstaben des Wortes entspricht
 				{
 				if (word.charAt(i) == pressedKey)
 					{
@@ -319,7 +309,7 @@ function letterClick(letter) //Funktion für die einzelnen Tasten
 			
 			letter.style.background = "#848484"; //Der Buchstabe wird grau gemacht
 			
-			if (rightLetters == letters) //Wenn alle Buchstaben erraten wurden
+			if (rightLetters == word.length) //Wenn alle Buchstaben erraten wurden
 				{
 				rightLetters = 0; //Zurücksetzen der richtigen Buchstaben und der Fehler
 				mistakes = 0;
@@ -390,7 +380,7 @@ function letterClick(letter) //Funktion für die einzelnen Tasten
 					
 					keysPressable = true; //Die Buchstaben sind wieder drückbar
 					
-					for (i=0; i<letters; i++) //Die Anzeige der erratenen Buchstaben wird zurückgesetzt
+					for (i=0; i<word.length; i++) //Die Anzeige der erratenen Buchstaben wird zurückgesetzt
 						{
 						document.getElementById("letter" + (i+1)).innerHTML = "<p>_</p>";
 						}
@@ -416,7 +406,7 @@ function letterClick(letter) //Funktion für die einzelnen Tasten
 				
 				keysPressable = false; //Die Buchstaben sind nun nicht mehr drückbar
 				
-				for (i=0; i<letters; i++) //Die richtigen Buchstaben des Wortes werden in der Anzeige aufgedeckt
+				for (i=0; i<word.length; i++) //Die richtigen Buchstaben des Wortes werden in der Anzeige aufgedeckt
 						{
 						document.getElementById("letter" + (i+1)).innerHTML = word.charAt(i);
 						}
@@ -471,7 +461,7 @@ function letterClick(letter) //Funktion für die einzelnen Tasten
 					
 					keysPressable = true; //Die Buchstaben sind wieder drückbar
 					
-					for (i=0; i<letters; i++) //Die Anzeige der erratenen Buchstaben wird zurückgesetzt
+					for (i=0; i<word.length; i++) //Die Anzeige der erratenen Buchstaben wird zurückgesetzt
 						{
 						document.getElementById("letter" + (i+1)).innerHTML = "<p>_</p>";
 						}
